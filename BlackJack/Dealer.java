@@ -8,17 +8,22 @@ class Dealer extends Partitioner
     public boolean aiHit(ArrayList<Player> players ,Deck deck){//點數已大於等於17用
         int countnormal=0,countGT=0;
         double proportion;
-        if(this.opvalue==20)
+        if(this.opvalue==20)//夠大了
             return false;
-        for(int i=0;i<players.size();i++){//還在遊戲的人
-            if(players.get(i).state.equals("Normal"))
-                countnormal++;
-            for(int j=0;j<players.get(i).cards.size();j++){
-                if(players.get(i).cards.get(j).ishidden==true){
-                    if(players.get(i).opvalue-players.get(i).cards.get(j).value>=this.opvalue-this.cards.get(0).value)//計算顯示的牌面大於莊家牌面的人數
-                        countGT++;
-                    else
-                        break;
+        else if(this.opvalue == this.value && acemount!=0){//如果最佳解與最大解相同 且 Ace數量不為0
+            return true;
+        }
+        else{
+            for(int i=0;i<players.size();i++){//還在遊戲的人
+                if(players.get(i).state.equals("Normal"))
+                    countnormal++;
+                for(int j=0;j<players.get(i).cards.size();j++){
+                    if(players.get(i).cards.get(j).ishidden==true){
+                        if(players.get(i).opvalue-players.get(i).cards.get(j).value>=this.opvalue-this.cards.get(0).value)//計算顯示的牌面大於莊家牌面的人數
+                            countGT++;
+                        else
+                            break;
+                    }
                 }
             }
         }
